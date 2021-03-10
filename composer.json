@@ -4,5 +4,8 @@
   "require": {
     "php": "^8.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "serve": "php -S localhost:3000 public/index.php"
+  }
 }

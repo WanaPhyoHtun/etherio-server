@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-const RTDB_URL = "https://nwe-oo-default-rtdb.netlify.app";
+const DATABASE_URL = "https://nwe-oo-default-rtdb.firebaseio.com";
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
@@ -14,14 +14,16 @@ if ($method === 'OPTIONS') {
   exit(0);
 }
 
-$url = RTDB_URL . $path;
+$url = DATABASE_URL . $path;
+$options =  [
+  'method' => $method,
+];
 $context = stream_context_create([
-  'http' => [
-    'method' => $method,
-  ],
+  'http' => $options,
+  'https' => $options,
 ]);
 
-$response = @file_get_contents($url, false, $context);
+$response = file_get_contents($url, false, $context);
 
 header('Content-Type: application/json');
 
