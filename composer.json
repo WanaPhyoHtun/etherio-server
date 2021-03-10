@@ -1,0 +1,8 @@
+{
+  "name": "etherio/nwe-oo-server",
+  "description": "NweOo Server",
+  "require": {
+    "php": "^8.0.0"
+  },
+  "license": "MIT"
+}
