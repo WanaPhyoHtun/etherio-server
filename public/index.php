@@ -25,6 +25,6 @@ $context = stream_context_create([
 
 $response = file_get_contents($url, false, $context);
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 echo $response;
