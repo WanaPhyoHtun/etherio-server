@@ -40,7 +40,7 @@ if ($path == '/favicon.ico') {
 
 if ($path == '/') {
   header('Location: ' . REDIRECT_URL);
-  header('refresh: 0; url=' . REDIRECT_URL');
+  header('refresh: 0; url=' . REDIRECT_URL);
   exit(0);
 }
 
