@@ -2,15 +2,18 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+const REDIRECT_URL = "https://nwe-oo.web.app";
 const DATABASE_URL = "https://nwe-oo-default-rtdb.firebaseio.com";
 
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = $_SERVER['REQUEST_URI'] ?? '/';
+$path = parse_url($uri, PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
 
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE,OPTIONS');
+header('Access-Control-Allow-Headers: Authorization,X-Auth-Token');
 
 if ($method === 'OPTIONS') {
-  header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
   exit(0);
 }
 
@@ -23,8 +26,24 @@ $context = stream_context_create([
   'https' => $options,
 ]);
 
-$response = file_get_contents($url, false, $context);
+if (str_match('/\.json$/', )) {
+  header('Content-Type: application/json; charset=utf-8');
+  echo @file_get_contents($url, false, $context);
+  exit(0);
+}
 
-header('Content-Type: application/json; charset=utf-8');
+if ($path == '/favicon.ico') {
+  header('Content-Type: image/x-icon');
+  echo @file_get_contents(REDIRECT_URL . $path, false, $context);
+  exit(0);
+}
 
-echo $response;
+if ($path == '/') {
+  header('Location: ' . REDIRECT_URL);
+  header('refresh: 0; url=' . REDIRECT_URL');
+  exit(0);
+}
+
+http_response_code(404);
+
+exit(0);
