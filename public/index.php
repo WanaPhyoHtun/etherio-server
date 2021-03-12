@@ -26,7 +26,7 @@ $context = stream_context_create([
   'https' => $options,
 ]);
 
-if (str_match('/\.json$/', )) {
+if (str_match('/\.json$/', $uri)) {
   header('Content-Type: application/json; charset=utf-8');
   echo @file_get_contents($url, false, $context);
   exit(0);
